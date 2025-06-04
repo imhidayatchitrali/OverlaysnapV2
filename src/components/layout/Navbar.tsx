@@ -22,7 +22,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="bg-transparent shadow-none py-4 px-6">
+    <nav className="bg-transparent shadow-none py-3 px-6">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo + Brand - Always on the left */}
         <Link to="/" className="flex items-center order-1 lg:order-none">

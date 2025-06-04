@@ -1,8 +1,10 @@
 // import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import { Camera, Calendar, Users } from 'lucide-react';
 // import { useAuth } from '../contexts/AuthContext';
-import Button from '../components/ui/Button';
+// import Button from '../components/ui/Button';
+import PricingSection from '../components/layout/Pricing';
+import Footer from '../components/layout/Foter';
 
 interface FeatureCardProps {
   icon: React.ReactNode;
@@ -12,7 +14,7 @@ interface FeatureCardProps {
 }
 
 const HomePage: React.FC = () => {
-  const { currentUser } = { currentUser: "" };
+  // const { currentUser } = { currentUser: "" };
 
 
   return (
@@ -35,10 +37,13 @@ const HomePage: React.FC = () => {
 
 
         <div className="relative z-10 w-full max-w-4xl">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-clip-text ">
+          <h1 className="text-4xl md:text-4xl lg:text-4xl font-bold  ">
             Capture & Share Movement
           </h1>
-          <p className="text-xl text-gray-700 max-w-3xl mb-10 mx-auto">
+          <h2 className="italic  text-2xl md:text-5xl lg:text-4xl font-bold ">
+            with Style
+          </h2>
+          <p className="text-1xl max-w-1xl mb-10 mx-auto">
             Create unforgettable photo experiences, Guest snap photos with fun, custom overlays, and share instantly.
           </p>
           <div className="max-w-sm mx-auto p-6 bg-white rounded-xl border border-blue-200 shadow-md space-y-6">
@@ -60,6 +65,7 @@ const HomePage: React.FC = () => {
                     />
                   </svg>
                 </div>
+
                 <h2 className="text-xl font-semibold text-gray-800">Join an event</h2>
               </div>
               <p className="text-sm text-gray-500">
@@ -68,8 +74,10 @@ const HomePage: React.FC = () => {
             </div>
 
             {/* Input with Label */}
+            <hr className="my-6 border-gray-300" />
+
             <div className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">Event Code</label>
+              <label className=" flex text-sm font-medium ">Event Code</label>
               <input
                 type="text"
                 placeholder="E.G, YMJFKKLDS8801"
@@ -131,10 +139,49 @@ const HomePage: React.FC = () => {
       /> */}
 
 
-      <section className="w-full py-8 mt-10 relative z-10">
+      <section className="w-full py-8 mt-1 relative z-10">
         <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">How It Works</h2>
+          {/* <h2 className="text-3xl font-bold text-center mb-12">How It Works</h2> */}
+          <h2 className="text-3xl font-bold text-center mb-8 relative z-10">
+            <span className="relative inline-block px-4 py-2 z-10">
+              <span className="relative z-10">How It Works</span>
+              <svg
+                className="absolute top-1/2 left-0 w-full h-full z-0"
+                viewBox="0 0 300 100"
+                preserveAspectRatio="none"
+              >
+                <g transform="rotate(-2)">
+                  <rect x="2" y="22" width="300" height="8" fill="#FDC855" rx="2" />
+                  <rect x="0" y="20" width="300" height="8" fill="#FDC855" rx="2" />
+                </g>
+                <g transform="rotate(-2)">
+                  <rect x="2" y="22" width="300" height="8" fill="#FDC855" rx="2" />
+                  <rect x="0" y="20" width="300" height="8" fill="#FDC855" rx="2" />
+                </g>
 
+                <g transform="rotate(-4)">
+                  <rect x="2" y="2" width="300" height="8" fill="#FDC855" rx="2" />
+                  <rect x="2" y="10" width="300" height="8" fill="#FDC855" rx="2" />
+                </g>
+                {/* <g transform="rotate(1)">
+              <rect x="0" y="40" width="300" height="10" fill="#FDC855" rx="2" />
+            </g> */}
+                {/* <g transform="rotate(-1)">
+              <rect x="0" y="60" width="280" height="7" fill="#FDC855" rx="2" />
+              <rect x="4" y="63" width="280" height="7" fill="#FDC855" rx="2" />
+            </g>
+            <g transform="rotate(-2)">
+              <rect x="1" y="20" width="300" height="8" fill="#FDC855" rx="2" />
+            </g> */}
+                {/* <g transform="rotate(1)">
+              <rect x="2" y="40" width="300" height="10" fill="#FDC855" rx="3" />
+            </g>
+            <g transform="rotate(-1)">
+              <rect x="3" y="60" width="280" height="7" fill="#FDC855" rx="2" />
+            </g> */}
+              </svg>
+            </span>
+          </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <FeatureCard
               icon={
@@ -172,8 +219,11 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      <PricingSection />
       {/* CTA Section */}
-      <section className="w-full py-16 bg-gradient-to-r from-purple-700 to-pink-500 text-white relative z-10">
+      
+      {/* <section className="w-full py-16 mt-8 bg-gradient-to-r from-purple-700 to-pink-500 text-white relative z-10">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-6">Ready to Create Your Photo Event?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
@@ -197,8 +247,8 @@ const HomePage: React.FC = () => {
             )}
           </div>
         </div>
-      </section>
-
+      </section> */}
+      <Footer />
 
     </div>
   );
@@ -222,7 +272,7 @@ interface FeatureCardProps {
 const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, description }) => {
   return (
     <div className="rounded-xl bg-[#FFF8E0] p-6 shadow-sm ">
-      <div className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center bg-gradient-to-br from-[#FDC855] to-[#FDA503]">
+      <div className="w-16 h-16  mb-4 rounded-full  bg-gradient-to-br from-[#FDC855] to-[#FDA503]">
         {icon}
       </div>
       <h3 className="text-xl font-semibold mb-2 text-gray-800">{title}</h3>
