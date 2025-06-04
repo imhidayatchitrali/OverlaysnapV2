@@ -16,7 +16,7 @@ function App() {
     <Router>
       {/* <AuthProvider> */}
       {/* <EventProvider> */}
-      <div className="min-h-screen bg-gradient-to-b from-purple-50 to-white">
+      <div className="min-h-screen">
         <Navbar />
         <main className="container mx-auto px-4 py-8">
           <Routes>

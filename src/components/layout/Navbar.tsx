@@ -5,6 +5,7 @@ import logo from '../../assets/images/logo.png';
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  
   const { currentUser, logout } = {
     currentUser: '', logout: function () { }
   };
@@ -26,7 +27,7 @@ const Navbar: React.FC = () => {
         {/* Logo + Brand - Always on the left */}
         <Link to="/" className="flex items-center order-1 lg:order-none">
           <img src={logo} alt="SnapShare Logo" className="h-8 w-auto mr-2" />
-          <span className="text-xl font-bold text-purple-700">SnapOverlay</span>
+          {/* <span className="text-xl font-bold text-purple-700">SnapOverlay</span> */}
         </Link>
 
         {/* Hamburger Menu - On the right for mobile */}

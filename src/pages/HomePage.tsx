@@ -1,85 +1,179 @@
 // import React from 'react';
 import { Link } from 'react-router-dom';
-import { Camera, Calendar, Users, Image } from 'lucide-react';
+import { Camera, Calendar, Users } from 'lucide-react';
 // import { useAuth } from '../contexts/AuthContext';
 import Button from '../components/ui/Button';
+
+interface FeatureCardProps {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  bgColor?: string; // ✅ Make it optional
+}
 
 const HomePage: React.FC = () => {
   const { currentUser } = { currentUser: "" };
 
+
   return (
     <div className="flex flex-col items-center">
       {/* Hero Section */}
-      <section className="w-full py-12 md:py-24 flex flex-col items-center text-center px-4">
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-700 to-pink-500">
-          Capture Memories Together
-        </h1>
-        <p className="text-xl text-gray-700 max-w-2xl mb-10">
-          Create photo events, invite guests, and collect everyone's pictures in one beautiful place.
-        </p>
-
-        <div className="flex flex-col sm:flex-row gap-4 mb-16">
-          {currentUser ? (
-            <Link to="/create-event">
-              <Button primary>Create Event</Button>
-            </Link>
-          ) : (
-            <Link to="/join">
-              <Button primary>Join Event</Button>
-            </Link>
-          )}
-          {!currentUser && (
-            <Link to="/create-event">
-              <Button>Create Event</Button>
-            </Link>
-          )}
-        </div>
-
-        <div className="relative w-full max-w-4xl h-64 md:h-96 rounded-xl overflow-hidden shadow-2xl transform transition-transform hover:scale-[1.02] duration-300">
-          <img
+      <section className="w-full  flex flex-col items-center text-center  relative overflow-hidden">
+        {/* Background Image with 50% opacity */}
+        {/* <div className="absolute inset-y-0 right-0 w-1/1 h-full z-0"> */}
+        {/* <img
+          
             src="https://images.pexels.com/photos/3184183/pexels-photo-3184183.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
             alt="People taking photos at an event"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-purple-900/50 to-transparent"></div>
-        </div>
-      </section>
+            className="w-full h-full object-cover opacity-50"
+          /> */}
+        {/* <img src="/images/hero-image.png" alt="Hero" className="w-full max-w-xl h-auto object-contain" /> */}
 
-      {/* Features Section */}
-      <section className="w-full py-16 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">How It Works</h2>
+        {/* </div> */}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <FeatureCard
-              icon={<Calendar className="text-purple-700" size={32} />}
-              title="Create an Event"
-              description="Set up a new photo event in seconds. Add details, date, and customize your event page."
-            />
 
-            <FeatureCard
-              icon={<Users className="text-purple-700" size={32} />}
-              title="Invite Guests"
-              description="Share your event code or QR code with guests so they can easily join and participate."
-            />
 
-            <FeatureCard
-              icon={<Camera className="text-purple-700" size={32} />}
-              title="Take Photos"
-              description="Use our in-app camera with fun overlay designs to capture special moments."
-            />
 
-            <FeatureCard
-              icon={<Image className="text-purple-700" size={32} />}
-              title="View & Share"
-              description="Access all event photos in one place. Download, share, and relive the memories."
-            />
+        <div className="relative z-10 w-full max-w-4xl">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-clip-text ">
+            Capture & Share Movement
+          </h1>
+          <p className="text-xl text-gray-700 max-w-3xl mb-10 mx-auto">
+            Create unforgettable photo experiences, Guest snap photos with fun, custom overlays, and share instantly.
+          </p>
+          <div className="max-w-sm mx-auto p-6 bg-white rounded-xl border border-blue-200 shadow-md space-y-6">
+            {/* Header */}
+            <div className="text-left space-y-2">
+              <div className="flex items-center space-x-2">
+                <div className="bg-blue-100 p-2 rounded-full">
+                  <svg
+                    className="w-6 h-6 text-blue-600"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M15 10l4.553-4.553a1.5 1.5 0 00-2.122-2.121L12.879 7.879M9 15l-4.553 4.553a1.5 1.5 0 002.122 2.121L11.121 16.12"
+                    />
+                  </svg>
+                </div>
+                <h2 className="text-xl font-semibold text-gray-800">Join an event</h2>
+              </div>
+              <p className="text-sm text-gray-500">
+                Photos you take may be visible to the host and guests. You can always revisit and download them later!
+              </p>
+            </div>
+
+            {/* Input with Label */}
+            <div className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">Event Code</label>
+              <input
+                type="text"
+                placeholder="E.G, YMJFKKLDS8801"
+                className="w-full px-4 py-3 bg-gray-100 border-b-4 border-blue-400 text-sm focus:outline-none rounded-md focus:ring-0"
+              />
+            </div>
+            {/* Buttons */}
+            <div className="flex items-center space-x-2">
+              <button className="flex items-center justify-center px-4 py-2 border rounded-md text-sm font-medium border-gray-300 hover:bg-gray-100">
+                <svg
+                  className="w-5 h-5 mr-2 text-gray-600"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3 7V5a2 2 0 012-2h2M17 3h2a2 2 0 012 2v2M21 17v2a2 2 0 01-2 2h-2M7 21H5a2 2 0 01-2-2v-2M8 12h8"
+                  />
+                </svg>
+                Scan QR
+              </button>
+
+
+              <button style={{ backgroundColor: '#24D7DB' }}
+                className="flex-1 bg-cyan-500 text-white px-4 py-2 rounded-md font-semibold  text-sm">
+                Join Event
+              </button>
+            </div>
+
+            {/* Create Event Button */}
+            <button className="flex items-center justify-center w-full mt-2 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-100">
+              <svg
+                className="w-5 h-5 mr-2 text-gray-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 4v16m8-8H4" />
+              </svg>
+              Create Event
+            </button>
           </div>
         </div>
       </section>
+      {/* Features Section */}
+      {/* <FeatureCard
+        icon={
+          <div className="p-4 rounded-full bg-gradient-to-br from-[#FDC855] to-[#FDA503] inline-block">
+            <Calendar className="text-white" size={24} />
+          </div>
+        }
+        title="Create an Event"
+        description="Set up a new photo event in seconds. Add details, date, and customize your event page."
+        bgColor="#FFF8E0"
+      /> */}
 
+
+      <section className="w-full py-8 mt-10 relative z-10">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold text-center mb-12">How It Works</h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <FeatureCard
+              icon={
+                <div className="p-4 rounded-full bg-gradient-to-br from-[#FDC855] to-[#FDA503] inline-block">
+                  <Calendar className="text-white" size={24} />
+                </div>
+              }
+              title="Create an Event"
+              description="Set up a new photo event in seconds. Add details, date, and customize your event page."
+              bgColor="#FFF8E0"
+            />
+
+            <FeatureCard
+              icon={
+                <div className="p-4 rounded-full bg-gradient-to-br from-[#FDC855] to-[#FDA503] inline-block">
+                  <Users className="text-white" size={24} />
+                </div>
+              }
+              title="Invite Guests"
+              description="Share your event code or QR code with guests so they can easily join and participate."
+              bgColor="#FFF8E0"
+            />
+
+            <FeatureCard
+              icon={
+                <div className="p-4 rounded-full bg-gradient-to-br from-[#FDC855] to-[#FDA503] inline-block">
+                  <Camera className="text-white" size={24} />
+                </div>
+              }
+              title="Take Photos"
+              description="Use our in-app camera with fun overlay designs to capture special moments."
+              bgColor="#FFF8E0"
+            />
+
+          </div>
+        </div>
+      </section>
       {/* CTA Section */}
-      <section className="w-full py-16 bg-gradient-to-r from-purple-700 to-pink-500 text-white">
+      <section className="w-full py-16 bg-gradient-to-r from-purple-700 to-pink-500 text-white relative z-10">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-6">Ready to Create Your Photo Event?</h2>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
@@ -104,6 +198,8 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
+
+
     </div>
   );
 };
@@ -114,14 +210,24 @@ interface FeatureCardProps {
   description: string;
 }
 
+// const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, description }) => {
+//   return (
+//     <div className="bg-white rounded-lg p-6 shadow-md transition-transform hover:shadow-lg hover:-translate-y-1 duration-300">
+//       <div className="mb-4">{icon}</div>
+//       <h3 className="text-xl font-semibold mb-2">{title}</h3>
+//       <p className="text-gray-600">{description}</p>
+//     </div>
+//   );
+// };
 const FeatureCard: React.FC<FeatureCardProps> = ({ icon, title, description }) => {
   return (
-    <div className="bg-white rounded-lg p-6 shadow-md transition-transform hover:shadow-lg hover:-translate-y-1 duration-300">
-      <div className="mb-4">{icon}</div>
-      <h3 className="text-xl font-semibold mb-2">{title}</h3>
-      <p className="text-gray-600">{description}</p>
+    <div className="rounded-xl bg-[#FFF8E0] p-6 shadow-sm ">
+      <div className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center bg-gradient-to-br from-[#FDC855] to-[#FDA503]">
+        {icon}
+      </div>
+      <h3 className="text-xl font-semibold mb-2 text-gray-800">{title}</h3>
+      <p className="text-gray-600 text-sm">{description}</p>
     </div>
   );
 };
-
 export default HomePage;
