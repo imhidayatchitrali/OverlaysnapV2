@@ -5,7 +5,6 @@ import { Camera, Calendar, Users } from 'lucide-react';
 // import Button from '../components/ui/Button';
 import PricingSection from '../components/layout/Pricing';
 import Footer from '../components/layout/Foter';
-import { useEffect, useState } from 'react';
 
 interface FeatureCardProps {
   icon: React.ReactNode;
@@ -17,38 +16,13 @@ interface FeatureCardProps {
 const HomePage: React.FC = () => {
   // const { currentUser } = { currentUser: "" };
 
-  // Somewhere in your component, e.g., App.tsx or HomePage
-  const [deferredPrompt, setDeferredPrompt] = useState<Event | null>(null);
-
-  useEffect(() => {
-    window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      setDeferredPrompt(e);
-    });
-  }, []);
-
-  const handleInstallClick = async () => {
-    if (deferredPrompt) {
-      (deferredPrompt as any).prompt();
-      const { outcome } = await (deferredPrompt as any).userChoice;
-      console.log(`User response: ${outcome}`);
-      setDeferredPrompt(null);
-    }
-  };
 
 
 
   return (
     <div className="flex flex-col items-center">
       {/* Hero Section */}
-      {deferredPrompt && (
-        <button
-          className="fixed bottom-4 right-4 bg-blue-600 text-white px-4 py-2 rounded"
-          onClick={handleInstallClick}
-        >
-          Install App
-        </button>
-      )}
+
       <section className="w-full  flex flex-col items-center text-center  relative overflow-hidden">
         {/* Background Image with 50% opacity */}
         {/* <div className="absolute inset-y-0 right-0 w-1/1 h-full z-0"> */}
