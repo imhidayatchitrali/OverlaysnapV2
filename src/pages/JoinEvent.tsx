@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { QrCode, Send, AlertCircle } from 'lucide-react';
-import { useEvent } from '../contexts/EventContext';
+// import { useEvent } from '../contexts/EventContext';
 import Button from '../components/ui/Button';
 import JoinConfirmModal from '../components/events/JoinConfirmModal';
 import QrScanner from '../components/events/QrScanner';
@@ -16,8 +16,8 @@ const JoinEvent: React.FC = () => {
   const [currentEvent, setCurrentEvent] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  
-  const { joinEvent } = useEvent();
+
+  // const { joinEvent } = useEvent();
   const navigate = useNavigate();
   const { eventId } = useParams();
 
@@ -29,16 +29,17 @@ const JoinEvent: React.FC = () => {
 
   const handleJoinEvent = async (code: string) => {
     setError(null);
-    
+
     if (!code.trim()) {
       setError('Please enter an event code');
       return;
     }
-    
+
     setLoading(true);
-    
+
     try {
-      const event = await joinEvent(code);
+      const event = "";
+      // const event = await joinEvent(code);
       setCurrentEvent(event);
       setShowConfirmModal(true);
     } catch (err: any) {
@@ -67,14 +68,14 @@ const JoinEvent: React.FC = () => {
   return (
     <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-6 md:p-8">
       <h1 className="text-3xl font-bold mb-6 text-gray-800">Join Event</h1>
-      
+
       {error && (
         <div className="mb-6 p-4 bg-red-50 rounded-lg flex items-start">
           <AlertCircle className="text-red-500 mr-2 flex-shrink-0 mt-0.5" size={20} />
           <p className="text-red-700">{error}</p>
         </div>
       )}
-      
+
       <div className="mb-8">
         <label htmlFor="eventCode" className="block text-sm font-medium text-gray-700 mb-2">
           Enter Event Code
@@ -99,10 +100,10 @@ const JoinEvent: React.FC = () => {
           </button>
         </div>
       </div>
-      
+
       <div className="text-center mb-8">
         <p className="text-gray-500 mb-2">or</p>
-        <Button 
+        <Button
           onClick={() => setShowScanner(true)}
           disabled={loading}
           className="flex items-center justify-center mx-auto"
@@ -111,13 +112,13 @@ const JoinEvent: React.FC = () => {
           Scan QR Code
         </Button>
       </div>
-      
+
       <div className="bg-gray-50 p-4 rounded-lg mb-4">
         <p className="text-sm text-gray-600 text-center">
           By joining an event, you'll be able to take photos and view all photos shared by event guests.
         </p>
       </div>
-      
+
       {showScanner && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-lg max-w-md w-full p-4">
@@ -126,9 +127,9 @@ const JoinEvent: React.FC = () => {
           </div>
         </div>
       )}
-      
+
       {showConfirmModal && currentEvent && (
-        <JoinConfirmModal 
+        <JoinConfirmModal
           event={currentEvent}
           onConfirm={handleConfirmJoin}
           onCancel={() => setShowConfirmModal(false)}

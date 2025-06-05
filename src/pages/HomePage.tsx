@@ -9,7 +9,7 @@ import Footer from '../components/layout/Foter';
 import backgroundImage from '../assets/images/hero-background.png'; // Import your background image
 import QrScanner from '../components/events/QrScanner';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEvent } from '../contexts/EventContext';
+// import { useEvent } from '../contexts/EventContext';
 import JoinConfirmModal from '../components/events/JoinConfirmModal';
 
 interface FeatureCardProps {
@@ -27,7 +27,8 @@ const HomePage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const { joinEvent } = useEvent();
+  // const { joinEvent } = { joinEvent: {} };
+  // const { joinEvent } = useEvent();
   const navigate = useNavigate();
   const { eventId } = useParams();
 
@@ -48,7 +49,8 @@ const HomePage: React.FC = () => {
     setLoading(true);
 
     try {
-      const event = await joinEvent(code);
+      const event = {};
+      // const event = await joinEvent(code);
       setCurrentEvent(event);
       setShowConfirmModal(true);
     } catch (err: any) {

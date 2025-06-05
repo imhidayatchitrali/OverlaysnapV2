@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useState, useEffect } from 'react';
 import { Users, Calendar, Camera, CreditCard } from 'lucide-react';
-import { useAuth } from '../contexts/AuthContext';
+// import { useAuth } from '../contexts/AuthContext';
 import Button from '../components/ui/Button';
 
 const AdminPanel: React.FC = () => {
   const [activeTab, setActiveTab] = useState('users');
   const [loading, setLoading] = useState(true);
 //   const [error, setError] = useState<string | null>(null);
-  const { currentUser } = useAuth();
+  // const { currentUser } = useAuth();
   
   // Mock data for demonstration
   const [users, setUsers] = useState([
@@ -44,15 +44,15 @@ const AdminPanel: React.FC = () => {
     );
   }
   
-  if (!currentUser?.isAdmin) {
-    return (
-      <div className="bg-white rounded-lg shadow-md p-8 max-w-md mx-auto text-center">
-        <h1 className="text-2xl font-bold mb-4 text-red-500">Access Denied</h1>
-        <p className="mb-6">You do not have permission to view this page.</p>
-        <Button onClick={() => window.history.back()}>Go Back</Button>
-      </div>
-    );
-  }
+  // if () {
+  //   return (
+  //     <div className="bg-white rounded-lg shadow-md p-8 max-w-md mx-auto text-center">
+  //       <h1 className="text-2xl font-bold mb-4 text-red-500">Access Denied</h1>
+  //       <p className="mb-6">You do not have permission to view this page.</p>
+  //       <Button onClick={() => window.history.back()}>Go Back</Button>
+  //     </div>
+  //   );
+  // }
   
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden">

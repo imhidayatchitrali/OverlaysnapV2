@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, Link } from 'react-router-dom';
 import { Plus, Calendar, QrCode, Trash2, Share2 } from 'lucide-react';
-import { useEvent } from '../contexts/EventContext';
+// import { useEvent } from '../contexts/EventContext';
 import Button from '../components/ui/Button';
 
 const MyHub: React.FC = () => {
@@ -11,24 +11,26 @@ const MyHub: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [showQrCode, setShowQrCode] = useState<string | null>(null);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState<string | null>(null);
-  
+
   const location = useLocation();
-//   const navigate = useNavigate();
-  const { getUserEvents, deleteEvent } = useEvent();
-  
+  //   const navigate = useNavigate();
+  // const { getUserEvents, deleteEvent } = { getUserEvents: "", deleteEvent: "" };
+  // const { getUserEvents, deleteEvent } = useEvent();
+
   // Check for newly created event
   const queryParams = new URLSearchParams(location.search);
   const newEventId = queryParams.get('eventCreated');
-  
+
   useEffect(() => {
     fetchEvents();
   }, []);
-  
+
   const fetchEvents = async () => {
     try {
       setLoading(true);
-      const userEvents = await getUserEvents();
-      setEvents(userEvents);
+      // const userEvents = true;
+      // const userEvents = await getUserEvents();
+      // setEvents(userEvents);
       setError(null);
     } catch (err) {
       console.error('Error fetching events:', err);
@@ -37,10 +39,10 @@ const MyHub: React.FC = () => {
       setLoading(false);
     }
   };
-  
+
   const handleDeleteEvent = async (eventId: string) => {
     try {
-      await deleteEvent(eventId);
+      // await deleteEvent(eventId);
       setEvents(events.filter(event => event.id !== eventId));
       setShowDeleteConfirm(null);
     } catch (err) {
@@ -48,7 +50,7 @@ const MyHub: React.FC = () => {
       setError('Failed to delete event. Please try again.');
     }
   };
-  
+
   const copyEventLink = (eventCode: string) => {
     const url = `${window.location.origin}/join/${eventCode}`;
     navigator.clipboard.writeText(url)
@@ -67,7 +69,7 @@ const MyHub: React.FC = () => {
       year: 'numeric'
     }).format(date);
   };
-  
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-64">
@@ -75,7 +77,7 @@ const MyHub: React.FC = () => {
       </div>
     );
   }
-  
+
   return (
     <div className="max-w-4xl mx-auto">
       <div className="flex justify-between items-center mb-8">
@@ -86,7 +88,7 @@ const MyHub: React.FC = () => {
           </Button>
         </Link>
       </div>
-      
+
       {newEventId && (
         <div className="mb-6 p-4 bg-green-50 rounded-lg">
           <p className="text-green-700">
@@ -94,13 +96,13 @@ const MyHub: React.FC = () => {
           </p>
         </div>
       )}
-      
+
       {error && (
         <div className="mb-6 p-4 bg-red-50 rounded-lg">
           <p className="text-red-700">{error}</p>
         </div>
       )}
-      
+
       {events.length === 0 ? (
         <div className="bg-white rounded-lg shadow-md p-8 text-center">
           <div className="mb-4 text-purple-500">
@@ -121,9 +123,9 @@ const MyHub: React.FC = () => {
           {events.map(event => (
             <div key={event.id} className="bg-white rounded-lg shadow-md overflow-hidden">
               <div className="relative h-48">
-                <img 
-                  src={event.imageUrl} 
-                  alt={event.name} 
+                <img
+                  src={event.imageUrl}
+                  alt={event.name}
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
@@ -132,7 +134,7 @@ const MyHub: React.FC = () => {
                   <p className="text-sm">{formatDate(event.date)}</p>
                 </div>
               </div>
-              
+
               <div className="p-4">
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center">
@@ -140,14 +142,14 @@ const MyHub: React.FC = () => {
                       Code: {event.code}
                     </span>
                   </div>
-                  <button 
+                  <button
                     onClick={() => setShowQrCode(event.id)}
                     className="text-gray-500 hover:text-purple-700"
                   >
                     <QrCode size={20} />
                   </button>
                 </div>
-                
+
                 <div className="flex justify-between">
                   <button
                     onClick={() => setShowDeleteConfirm(event.id)}
@@ -155,7 +157,7 @@ const MyHub: React.FC = () => {
                   >
                     <Trash2 size={16} className="mr-1" /> Delete
                   </button>
-                  
+
                   <div className="flex space-x-2">
                     <button
                       onClick={() => copyEventLink(event.code)}
@@ -163,8 +165,8 @@ const MyHub: React.FC = () => {
                     >
                       <Share2 size={16} className="mr-1" /> Share
                     </button>
-                    
-                    <Link 
+
+                    <Link
                       to={`/photo-booth/${event.id}`}
                       className="text-purple-600 hover:text-purple-800 text-sm font-medium flex items-center"
                     >
@@ -177,7 +179,7 @@ const MyHub: React.FC = () => {
           ))}
         </div>
       )}
-      
+
       {/* QR Code Modal */}
       {showQrCode && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -186,21 +188,21 @@ const MyHub: React.FC = () => {
             <p className="mb-4 text-gray-600">
               Share this QR code with your guests so they can easily join your event.
             </p>
-            
+
             <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200 flex justify-center mb-4">
               {/* This would be a real QR code in a production app */}
               <div className="w-48 h-48 bg-gray-200 flex items-center justify-center">
                 <p className="text-gray-500 text-center">QR Code for<br />{events.find(e => e.id === showQrCode)?.code}</p>
               </div>
             </div>
-            
+
             <div className="flex justify-end">
               <Button onClick={() => setShowQrCode(null)}>Close</Button>
             </div>
           </div>
         </div>
       )}
-      
+
       {/* Delete Confirmation Modal */}
       {showDeleteConfirm && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -209,12 +211,12 @@ const MyHub: React.FC = () => {
             <p className="mb-6 text-gray-600">
               Are you sure you want to delete this event? All photos and data will be permanently removed.
             </p>
-            
+
             <div className="flex justify-end space-x-4">
               <Button onClick={() => setShowDeleteConfirm(null)}>
                 Cancel
               </Button>
-              <Button 
+              <Button
                 danger
                 onClick={() => handleDeleteEvent(showDeleteConfirm)}
               >
