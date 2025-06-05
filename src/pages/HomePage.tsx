@@ -1,11 +1,16 @@
-// import React from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useState, useEffect } from 'react';
 // import { Link } from 'react-router-dom';
-import { Camera, Calendar, Users } from 'lucide-react';
+import { Camera, Calendar, Users, AlertCircle } from 'lucide-react';
 // import { useAuth } from '../contexts/AuthContext';
 // import Button from '../components/ui/Button';
 import PricingSection from '../components/layout/Pricing';
 import Footer from '../components/layout/Foter';
 import backgroundImage from '../assets/images/hero-background.png'; // Import your background image
+import QrScanner from '../components/events/QrScanner';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useEvent } from '../contexts/EventContext';
+import JoinConfirmModal from '../components/events/JoinConfirmModal';
 
 interface FeatureCardProps {
   icon: React.ReactNode;
@@ -15,15 +20,80 @@ interface FeatureCardProps {
 }
 
 const HomePage: React.FC = () => {
-  // const { currentUser } = { currentUser: "" };
+  const [eventCode, setEventCode] = useState('');
+  const [showScanner, setShowScanner] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [currentEvent, setCurrentEvent] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
+  const { joinEvent } = useEvent();
+  const navigate = useNavigate();
+  const { eventId } = useParams();
 
+  useEffect(() => {
+    if (eventId) {
+      handleJoinEvent(eventId);
+    }
+  }, [eventId]);
 
+  const handleJoinEvent = async (code: string) => {
+    setError(null);
+
+    if (!code.trim()) {
+      setError('Please enter an event code');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const event = await joinEvent(code);
+      setCurrentEvent(event);
+      setShowConfirmModal(true);
+    } catch (err: any) {
+      console.error('Error joining event:', err);
+      setError(err.message || 'Failed to join event. Please check the code and try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleScanResult = (result: string) => {
+    setShowScanner(false);
+    if (result) {
+      setEventCode(result);
+      handleJoinEvent(result);
+    }
+  };
+
+  const handleConfirmJoin = () => {
+    setShowConfirmModal(false);
+    if (currentEvent) {
+      navigate(`/photo-booth/${currentEvent.id}`);
+    }
+  };
 
   return (
     <div className="flex flex-col items-center">
       {/* Hero Section */}
 
+
+      {showScanner && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg max-w-md w-full p-4">
+            <h2 className="text-xl font-bold mb-4">Scan QR Coddde</h2>
+            <QrScanner onScan={handleScanResult} onCancel={() => setShowScanner(false)} />
+          </div>
+        </div>
+      )}
+      {showConfirmModal && currentEvent && (
+        <JoinConfirmModal
+          event={currentEvent}
+          onConfirm={handleConfirmJoin}
+          onCancel={() => setShowConfirmModal(false)}
+        />
+      )}
       <div className="absolute inset-y-0 right-0 w-full h-full  lg:w-1/3 z-0">
         <img
           src={backgroundImage}
@@ -31,22 +101,7 @@ const HomePage: React.FC = () => {
           className="h-full w-full object-contain object-right-top opacity-90 blur-lg"
         />
       </div>
-      <section className="w-full  flex flex-col items-center text-center  relative overflow-hidden min-h-[80vh]">
-        {/* Background Image with 50% opacity */}
-        {/* <div className="absolute inset-y-0 right-0 w-1/1 h-full z-0"> */}
-        {/* <img
-          
-            src="https://images.pexels.com/photos/3184183/pexels-photo-3184183.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-            alt="People taking photos at an event"
-            className="w-full h-full object-cover opacity-50"
-          /> */}
-        {/* <img src="/images/hero-image.png" alt="Hero" className="w-full max-w-xl h-auto object-contain" /> */}
-
-        {/* </div> */}
-
-
-
-
+      <section className="w-full  flex flex-col items-center text-center  relative overflow-hidden ">
         <div className="relative z-10 w-full max-w-4xl">
           <h1 className="text-4xl md:text-4xl lg:text-4xl font-bold  ">
             Capture & Share Movement
@@ -85,11 +140,20 @@ const HomePage: React.FC = () => {
             </div>
 
             {/* Input with Label */}
-            <hr className="my-6 border-gray-300" />
+            <hr className=" border-gray-300" />
 
             <div className="space-y-2">
               <label className=" flex text-sm font-medium ">Event Code</label>
+              {error && (
+                <div className="mb-6 p-4 bg-red-50 rounded-lg flex items-start">
+                  <AlertCircle className="text-red-500 mr-2 flex-shrink-0 mt-0.5" size={20} />
+                  <p className="text-red-700">{error}</p>
+                </div>
+              )}
               <input
+                onChange={(e) => setEventCode(e.target.value.toUpperCase())}
+                value={eventCode}
+                disabled={loading}
                 type="text"
                 placeholder="E.G, YMJFKKLDS8801"
                 className="w-full px-4 py-3 bg-gray-100 border-b-4 border-blue-400 text-sm focus:outline-none rounded-md focus:ring-0"
@@ -97,7 +161,8 @@ const HomePage: React.FC = () => {
             </div>
             {/* Buttons */}
             <div className="flex items-center space-x-2">
-              <button className="flex items-center justify-center px-4 py-2 border rounded-md text-sm font-medium border-gray-300 hover:bg-gray-100">
+              <button onClick={() => setShowScanner(true)}
+                disabled={loading} className="flex items-center justify-center px-4 py-2 border rounded-md text-sm font-medium border-gray-300 hover:bg-gray-100">
                 <svg
                   className="w-5 h-5 mr-2 text-gray-600"
                   fill="none"
@@ -116,7 +181,8 @@ const HomePage: React.FC = () => {
               </button>
 
 
-              <button style={{ backgroundColor: '#24D7DB' }}
+              <button onClick={() => handleJoinEvent(eventCode)}
+                disabled={loading} style={{ backgroundColor: '#24D7DB' }}
                 className="flex-1 bg-cyan-500 text-white px-4 py-2 rounded-md font-semibold  text-sm">
                 Join Event
               </button>
@@ -137,19 +203,6 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
-      {/* Features Section */}
-      {/* <FeatureCard
-        icon={
-          <div className="p-4 rounded-full bg-gradient-to-br from-[#FDC855] to-[#FDA503] inline-block">
-            <Calendar className="text-white" size={24} />
-          </div>
-        }
-        title="Create an Event"
-        description="Set up a new photo event in seconds. Add details, date, and customize your event page."
-        bgColor="#FFF8E0"
-      /> */}
-
-
       <section className="w-full py-8 mt-1 relative z-10">
         <div className="container mx-auto px-4">
           {/* <h2 className="text-3xl font-bold text-center mb-12">How It Works</h2> */}
@@ -174,22 +227,6 @@ const HomePage: React.FC = () => {
                   <rect x="2" y="2" width="300" height="8" fill="#FDC855" rx="2" />
                   <rect x="2" y="10" width="300" height="8" fill="#FDC855" rx="2" />
                 </g>
-                {/* <g transform="rotate(1)">
-              <rect x="0" y="40" width="300" height="10" fill="#FDC855" rx="2" />
-            </g> */}
-                {/* <g transform="rotate(-1)">
-              <rect x="0" y="60" width="280" height="7" fill="#FDC855" rx="2" />
-              <rect x="4" y="63" width="280" height="7" fill="#FDC855" rx="2" />
-            </g>
-            <g transform="rotate(-2)">
-              <rect x="1" y="20" width="300" height="8" fill="#FDC855" rx="2" />
-            </g> */}
-                {/* <g transform="rotate(1)">
-              <rect x="2" y="40" width="300" height="10" fill="#FDC855" rx="3" />
-            </g>
-            <g transform="rotate(-1)">
-              <rect x="3" y="60" width="280" height="7" fill="#FDC855" rx="2" />
-            </g> */}
               </svg>
             </span>
           </h2>
@@ -230,37 +267,8 @@ const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
-
       <PricingSection />
-      {/* CTA Section */}
-
-      {/* <section className="w-full py-16 mt-8 bg-gradient-to-r from-purple-700 to-pink-500 text-white relative z-10">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold mb-6">Ready to Create Your Photo Event?</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Start collecting memories from everyone at your next gathering, wedding, or special occasion.
-          </p>
-
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
-            {currentUser ? (
-              <Link to="/create-event">
-                <Button light>Create Event</Button>
-              </Link>
-            ) : (
-              <>
-                <Link to="/join">
-                  <Button light>Join Event</Button>
-                </Link>
-                <Link to="/create-event">
-                  <Button outline>Create Event</Button>
-                </Link>
-              </>
-            )}
-          </div>
-        </div>
-      </section> */}
       <Footer />
-
     </div>
   );
 };
