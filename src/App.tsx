@@ -19,7 +19,7 @@ function App() {
       {/* <EventProvider> */}
       <div className="min-h-screen">
         <Navbar />
-        <main className="container mx-auto px-4 py-8">
+        <main className="container mx-auto px-2 py-2">
           <Routes>
             <Route path="/" element={<HomePage />} />
             {/* <Route path="/create-event" element={ */}

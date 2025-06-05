@@ -57,7 +57,7 @@ const PricingSection = () => {
           ref={containerRef}
           className="overflow-x-auto hide-scrollbar"
         >
-          <div className="flex md:justify-center gap-10 px-4 md:px-0 min-w-[800px] md:min-w-0">
+          <div className="flex md:justify-center gap-6 px-4 md:px-0 min-w-[800px] md:min-w-0">
             {/* Card 1 */}
             <div 
               ref={el => el && (cardRefs.current[0] = el)}

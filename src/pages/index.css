@@ -1,0 +1,7 @@
+
+.banner-image {
+  @apply flex mt-24 ml-10 w-max rounded-lg;
+}
+.side-image {
+  @apply flex mt-24 ml-10 w-48 rounded-lg mr-96;
+}

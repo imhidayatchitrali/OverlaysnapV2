@@ -5,6 +5,7 @@ import { Camera, Calendar, Users } from 'lucide-react';
 // import Button from '../components/ui/Button';
 import PricingSection from '../components/layout/Pricing';
 import Footer from '../components/layout/Foter';
+import backgroundImage from '../assets/images/hero-background.png'; // Import your background image
 
 interface FeatureCardProps {
   icon: React.ReactNode;
@@ -23,7 +24,14 @@ const HomePage: React.FC = () => {
     <div className="flex flex-col items-center">
       {/* Hero Section */}
 
-      <section className="w-full  flex flex-col items-center text-center  relative overflow-hidden">
+      <div className="absolute inset-y-0 right-0 w-full h-full  lg:w-1/3 z-0">
+        <img
+          src={backgroundImage}
+          alt="Decorative background"
+          className="h-full w-full object-contain object-right-top opacity-90 blur-lg"
+        />
+      </div>
+      <section className="w-full  flex flex-col items-center text-center  relative overflow-hidden min-h-[80vh]">
         {/* Background Image with 50% opacity */}
         {/* <div className="absolute inset-y-0 right-0 w-1/1 h-full z-0"> */}
         {/* <img
@@ -46,7 +54,7 @@ const HomePage: React.FC = () => {
           <h2 className="italic  text-2xl md:text-5xl lg:text-4xl font-bold ">
             with Style
           </h2>
-          <p className="text-1xl max-w-1xl mb-10 mx-auto">
+          <p className="text-1xl max-w-1xl mb-4 mx-auto">
             Create unforgettable photo experiences, Guest snap photos with fun, custom overlays, and share instantly.
           </p>
           <div className="max-w-sm mx-auto p-6 bg-white rounded-xl border border-blue-200 shadow-md space-y-6">
