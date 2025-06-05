@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, User } from 'lucide-react';
-import logo from '../../assets/images/logo.png';
+// import logo from '../../assets/images/logo.png';
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -26,7 +26,7 @@ const Navbar: React.FC = () => {
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo + Brand - Always on the left */}
         <Link to="/" className="flex items-center order-1 lg:order-none">
-          <img src={logo} alt="SnapOverlay Logo" className="h-8 w-auto mr-2" />
+          <img src="/images/logo.png" alt="SnapOverlay Logo" className="h-8 w-auto mr-2" />
           {/* <span className="text-xl font-bold text-purple-700">SnapOverlay</span> */}
         </Link>
 
