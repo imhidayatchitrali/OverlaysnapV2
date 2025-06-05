@@ -4,9 +4,6 @@ import App from './App.tsx';
 import './index.css';
 import { registerSW } from 'virtual:pwa-register'
 
-// main.tsx or App.tsx
-// import { registerSW } from 'virtual:pwa-register'
-
 registerSW({
   onNeedRefresh() {
     console.log('New content available, refresh to update.')
