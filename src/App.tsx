@@ -11,6 +11,7 @@ import HomePage from './pages/HomePage';
 // import { EventProvider } from './contexts/EventContext';
 // import PrivateRoute from './components/auth/PrivateRoute';
 
+
 function App() {
   return (
     <Router>
