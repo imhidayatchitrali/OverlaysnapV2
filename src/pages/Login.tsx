@@ -18,7 +18,7 @@ const Login: React.FC = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const { login, signup } = useAuth();
+    const { login, signup, googleLogin } = useAuth();
     const navigate = useNavigate();
 
     const toggleMode = () => {
@@ -44,6 +44,15 @@ const Login: React.FC = () => {
             setError(err.message || 'Failed to authenticate. Please try again.');
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleGoogleLogin = async () => {
+        try {
+            await googleLogin();
+            console.log("Google login successful!");
+        } catch {
+            alert("Google login failed!");
         }
     };
 
@@ -199,6 +208,7 @@ const Login: React.FC = () => {
 
                         <div className="mt-6 grid grid-cols-2 gap-3">
                             <button
+                                onClick={handleGoogleLogin}
                                 type="button"
                                 className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
                             >
