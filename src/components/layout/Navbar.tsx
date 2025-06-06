@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, User } from 'lucide-react';
+import { useAuth } from '../../contexts/AuthContext';
 // import logo from '../../assets/images/logo.png';
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const { currentUser, logout } = {
-    currentUser: '', logout: function () { }
-  };
+  const { currentUser, logout } = useAuth();
+
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -74,11 +74,11 @@ const Navbar: React.FC = () => {
                 <Link to="/my-hub" className="text-lg font-medium text-gray-800 hover:text-purple-700 transition-colors" onClick={() => setIsMenuOpen(false)}>
                   My Hub
                 </Link>
-                {/* {currentUser.isAdmin && (
+                {currentUser && (
                   <Link to="/admin" className="text-lg font-medium text-gray-800 hover:text-purple-700 transition-colors" onClick={() => setIsMenuOpen(false)}>
                     Admin Panel
                   </Link>
-                )} */}
+                )}
                 <button
                   onClick={handleLogout}
                   className="text-lg font-medium text-gray-800 hover:text-purple-700 transition-colors text-left"
@@ -87,9 +87,13 @@ const Navbar: React.FC = () => {
                 </button>
               </>
             ) : (
-              <Link to="/join" className="text-lg font-medium text-gray-800 hover:text-purple-700 transition-colors" onClick={() => setIsMenuOpen(false)}>
-                Join Event
+              <><Link to="/login" className="text-lg font-medium text-gray-800 hover:text-purple-700 transition-colors" onClick={() => setIsMenuOpen(false)}>
+                Login
               </Link>
+                {/* <Link to="/join" className="text-lg font-medium text-gray-800 hover:text-purple-700 transition-colors" onClick={() => setIsMenuOpen(false)}>
+                  Join Event
+                </Link> */}
+              </>
             )}
           </div>
         </div>

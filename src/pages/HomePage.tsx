@@ -26,6 +26,7 @@ const HomePage: React.FC = () => {
   const [currentEvent, setCurrentEvent] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // const [showScanner, setShowScanner] = useState(false);
 
   // const { joinEvent } = { joinEvent: {} };
   // const { joinEvent } = useEvent();
@@ -61,13 +62,6 @@ const HomePage: React.FC = () => {
     }
   };
 
-  const handleScanResult = (result: string) => {
-    setShowScanner(false);
-    if (result) {
-      setEventCode(result);
-      handleJoinEvent(result);
-    }
-  };
 
   const handleConfirmJoin = () => {
     setShowConfirmModal(false);
@@ -80,14 +74,14 @@ const HomePage: React.FC = () => {
     <div className="flex flex-col items-center">
       {/* Hero Section */}
 
-
       {showScanner && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-md w-full p-4">
-            <h2 className="text-xl font-bold mb-4">Scan QR Coddde</h2>
-            <QrScanner onScan={handleScanResult} onCancel={() => setShowScanner(false)} />
-          </div>
-        </div>
+        <QrScanner
+          onScan={(result) => {
+            console.log('Scanned:', result);
+            setShowScanner(false);
+          }}
+          onCancel={() => setShowScanner(false)}
+        />
       )}
       {showConfirmModal && currentEvent && (
         <JoinConfirmModal
@@ -103,6 +97,7 @@ const HomePage: React.FC = () => {
           className="h-full w-full object-contain object-right-top opacity-90 blur-lg"
         />
       </div>
+
       <section className="w-full  flex flex-col items-center text-center  relative overflow-hidden ">
         <div className="relative z-10 w-full max-w-4xl">
           <h1 className="text-4xl md:text-4xl lg:text-4xl font-bold  ">
@@ -158,7 +153,7 @@ const HomePage: React.FC = () => {
                 disabled={loading}
                 type="text"
                 placeholder="E.G, YMJFKKLDS8801"
-                className="w-full px-4 py-3 bg-gray-100 border-b-4 border-blue-400 text-sm focus:outline-none rounded-md focus:ring-0"
+                className="w-full px-4 py-3 bg-gray-100 border-b-4 border-b-[#24D7DB] text-sm focus:outline-none rounded-md focus:ring-0"
               />
             </div>
             {/* Buttons */}
